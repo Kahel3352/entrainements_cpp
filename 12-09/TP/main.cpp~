@@ -1,0 +1,81 @@
+#include "person.h"
+#include <vector>
+
+vector<Person> vectPerson;
+char saisirChoix();
+void ajouter();
+void afficher();
+string chercher(string name);
+
+int main()
+{
+	//jeu d'essai
+	vectPerson.push_back(Person("Michaël", "Vanlerberghe", 20));
+	vectPerson.push_back(Person("Théo", "Jouffreau", 8));
+	vectPerson.push_back(Person("Peterson", "Rostain", 20));
+
+
+	bool quit = false;
+	string surname;
+	do{
+		cout<<"+: ajouter, f: chercher, a: afficher, q: quitter"<<endl;
+		switch(saisirChoix())
+		{
+			case '+':
+				ajouter();
+			break;
+			case 'f':
+				cout<<"Nom: ";
+				cin.ignore();
+				getline(cin, surname);
+				cout<<chercher(surname)<<endl;
+			break;
+			case 'q':
+				quit=true;
+			break;
+			case 'a':
+				afficher();
+			break;
+			default:
+				cout<<"choix invalide"<<endl;
+			break;
+		}
+	}while(!quit);
+}
+
+char saisirChoix()
+{
+	char choix;
+	cin>>choix;
+	return choix;	
+}
+
+void ajouter()
+{
+	Person person;
+	//Prevents next input to get the previous output
+	cin.ignore();
+	person.input();
+	vectPerson.push_back(person);
+}
+
+void afficher()
+{
+	cout<<"Liste des personnes"<<endl;
+	for(int i = 0; i < vectPerson.size(); i++)
+	{
+		vectPerson[i].display();
+	}
+		cin.ignore();
+}
+
+string chercher(string surname)
+{
+	cout<<"Résultat de la recherche pour: "<<surname<<endl;
+	for(int i = 0; i < vectPerson.size(); i++)
+	{
+		if(vectPerson[i].getSurname() == surname)
+			return vectPerson[i].getName() + " " + vectPerson[i].getSurname();
+	}
+	return "Aucun résultat";
+}

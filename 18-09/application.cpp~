@@ -1,0 +1,97 @@
+#include "application.h"
+
+
+Application::Application()
+{
+	isRunning = false;
+
+	//jeu d'essai
+	vectPerson.push_back(Person("Vanlerberghe", "Michaël", 20));
+	vectPerson.push_back(Person( "Jouffreau", "Théo", 8));
+	vectPerson.push_back(Person("Rostain", "Peterson", 20));
+}
+
+//méthodes privées
+void Application::afficherMenu()
+{
+	cout<<"+: ajouter, f: chercher, a: afficher, q: quitter"<<endl;
+}
+
+char Application::saisirChoix()
+{
+	char choix;
+	cin>>choix;
+	return choix;
+}
+
+void Application::realiserActionCorrespondantAuChoix(char choix)
+{
+	string surname;
+		switch(choix)
+		{
+			case '+':
+				ajouter();
+			break;
+			case 'f':
+				cout<<"Nom: ";
+				cin.ignore();
+				getline(cin, surname);
+				rechercher(surname).display();
+			break;
+			case 'q':
+				stop();
+			break;
+			case 'a':
+				afficher();
+			break;
+			default:
+				cout<<"choix invalide"<<endl;
+			break;
+		}
+}
+
+void Application::ajouter()
+{
+	Person person;
+	//Prevents next input to get the previous output
+	cin.ignore();
+	person.input();
+	vectPerson.push_back(person);
+}
+
+void Application::afficher()
+{
+	cout<<"Liste des personnes"<<endl;
+	int sizePerson = vectPerson.size()
+	for(int i = 0; i < sizePerson; i++)
+	{
+		vectPerson[i].display();
+	}
+		cin.ignore();
+}
+
+Person Application::rechercher(string chaineAChercher)
+{
+	Person p;
+	for(int i = 0; i < vectPerson.size(); i++)
+	{
+		if(vectPerson[i].getName() == chaineAChercher)
+			return vectPerson[i];
+	}
+	return p;
+}
+
+void Application::run()
+{
+	isRunning = true;
+	do
+	{
+		afficherMenu();
+		realiserActionCorrespondantAuChoix(saisirChoix());
+	}while(isRunning);
+}
+
+void Application::stop()
+{
+	isRunning = false;
+}
